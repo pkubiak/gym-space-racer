@@ -3,6 +3,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from types import SimpleNamespace
 
 
 def _det3(p0, p1, p2) -> float:
@@ -51,7 +52,13 @@ class CircularMap:
         np.random.seed(self.seed)
 
         cp = self._get_control_points(n)
-        self.start = cp[random.randint(0, n)]
+
+        rand_i = random.randint(0, n)
+        dp = cp[(rand_i+1) % len(cp)] - cp[rand_i]
+        print(cp[(rand_i+1) % len(cp)], cp[rand_i], dp)
+        self.start = SimpleNamespace(x=cp[rand_i, 0], y=cp[rand_i, 1], angle=math.atan2(dp[1], dp[0]))
+        print(self.start)
+        self.cpoints = cp
         if debug:
             plt.plot(cp[:, 0], cp[:, 1], 'x-')
 

@@ -8,6 +8,7 @@ from gym_space_racer.geometry import intersect, intersection
 
 class CircularMap:
     """Generate random map in shape of circle"""
+    PRECISION = 100
 
     def __init__(self, n=10, seed=None, width=0.05, debug=False):
         self.n = n
@@ -18,18 +19,17 @@ class CircularMap:
 
         cp = self._get_control_points(n)
 
-        rand_i = random.randint(0, n)
-        rand_i = 0
+        rand_i = np.random.randint(low=0, high=n, size=(1,))[0]
         dp = cp[(rand_i+1) % len(cp)] - cp[rand_i]
 
-        print(cp[(rand_i+1) % len(cp)], cp[rand_i], dp)
+        # print(cp[(rand_i+1) % len(cp)], cp[rand_i], dp)
         self.start = SimpleNamespace(x=cp[rand_i, 0], y=cp[rand_i, 1], angle=math.atan2(dp[1], dp[0]))
-        print(self.start)
+        # print(self.start)
         self.cpoints = cp
         if debug:
             plt.plot(cp[:, 0], cp[:, 1], 'x-')
 
-        interp = self._interpolate(cp[:, 0], cp[:, 1], n=10*n)
+        interp = self._interpolate(cp[:, 0], cp[:, 1], n=self.PRECISION)
         # interp = np.concatenate((interp, [interp[0]]))
 
         # interp = self._remove_intersections(interp)

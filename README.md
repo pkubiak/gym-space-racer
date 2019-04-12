@@ -20,6 +20,7 @@ For documentation and configuration parameters read: https://github.com/pkubiak/
 ## Installation ##
 
 ```bash
+git clone https://github.com/pkubiak/gym-space-racer.git
 cd gym-spacer-env
 pip3 install -e .
 
